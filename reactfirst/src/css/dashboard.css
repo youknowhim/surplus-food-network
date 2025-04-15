@@ -1,0 +1,118 @@
+/* Dashboardngo.css */
+
+
+
+.dashboard-container {
+  width: 1000px;
+  height:100vh;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin-right:400px;
+}
+
+.dashboard-title {
+  text-align: center;
+  color: #007BFF; /* Primary color */
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.loading, .error, .no-food {
+  text-align: center;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Space between cards */
+}
+
+.food-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #ddd; /* Border for definition */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
+}
+
+.food-card:hover {
+  transform: translateY(-5px); /* Slight hover lift */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced hover shadow */
+}
+
+.food-card h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.food-card p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.request-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #28a745; /* Green button */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px; /* Rounded button */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s; /* Smooth color transition */
+}
+
+.request-btn:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+@media (max-width: 768px) {
+  .food-card h3 {
+    font-size: 18px;
+  }
+
+  .request-btn {
+    font-size: 14px;
+  }
+}
+.search-container input{
+  width:500px;
+  height:40px;
+  
+}
+
+
+.refresh-button{
+  width:50px;
+}
+
+.refresh-button{
+  margin-left: 20px;
+  
+}
+.search-container input[placeholder]{
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size:large;
+  padding-left: 4px;
+  
+}
+
+
+
+
+
+
+
+  

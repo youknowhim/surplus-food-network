@@ -1,0 +1,143 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f4f4;
+    height: 100vh;
+  }
+  
+  /* Container */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Image Section */
+  .image-section {
+    flex: 1;
+    min-width: 50%;
+  }
+  
+  .image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Form Section */
+  .form-section {
+    flex: 1;
+    min-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
+  }
+  
+  .form-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Input Fields */
+  .input-group {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Role Selection */
+  .role-selection {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .role-selection label {
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .role-selection input {
+    margin-right: 5px;
+  }
+  
+  /* Register Button */
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
+  
+  /* Register Link */
+  .register-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .register-link span {
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .register-link span:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      width: 90%;
+    }
+  
+    .form-section {
+      min-width: 100%;
+      padding: 20px;
+    }
+  }
+  
