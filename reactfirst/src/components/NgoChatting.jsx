@@ -28,4 +28,20 @@ const NGOChatWithSupplier = ({ supplierId, ngoId }) => {
     setChat((prev) => [...prev, data]);
     setMessage("");
   };
-}
+  return (
+    <div>
+      <h3>Chat with NGO</h3>
+      <div>
+        {chat.map((msg, idx) => (
+          <p key={idx} style={{ textAlign: msg.sender === supplierId ? "right" : "left" }}>
+            {msg.text}
+          </p>
+        ))}
+      </div>
+      <input value={message} onChange={(e) => setMessage(e.target.value)} />
+      <button onClick={sendMessage}>Send</button>
+    </div>
+  );
+};
+
+export default SupplierChatWithNGO;

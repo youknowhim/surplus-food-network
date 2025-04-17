@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "../css/dashboardsupplier.css";
+import { useNavigate } from "react-router-dom";
+// import SupplierChatting from "../components/SupplierChatting.jsx";
 
 const DashboardSupplier = () => {
   const [supplier, setSupplier] = useState([{}]);
@@ -9,6 +11,8 @@ const DashboardSupplier = () => {
   const [quantity, setQuantity] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [location, setLocation] = useState("");
+  const navigate = useNavigate();
+  // const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     fetch("/api/supplier-profile", {
@@ -108,6 +112,10 @@ const DashboardSupplier = () => {
           </div>
         </section>
       </header>
+      <div>
+    </div>
+    <button onClick={()=>{navigate("/dashboard-supplier/:id/chat")}}>Chat</button>
+
       
       <section className="ngo-section">
         <div className="section-card">
@@ -123,6 +131,7 @@ const DashboardSupplier = () => {
                     <th>Food Requested</th>
                     <th>Contact</th>
                     <th>Action</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -142,6 +151,7 @@ const DashboardSupplier = () => {
                           >
                             Approve
                           </button>
+                          <td class = "approve-btn">Chat</td>
                         </td>
                       </tr>
                     ))
