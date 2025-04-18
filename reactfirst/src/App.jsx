@@ -6,7 +6,7 @@ import "./css/App.css";
 import Dashboardngo from "./pages/dashboardngo";
 import Dashboardsuppliers from "./pages/dashboardsuppliers";
 import PrivateRoute from "./pages/privateRoute"; // Import PrivateRoute
-import NGOChatWithSupplier from "./components/SupplierChatting";
+// import NGOChatWithSupplier from "./components/SupplierChatting";
 
 function App() {
   return (

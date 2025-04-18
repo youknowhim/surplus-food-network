@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../css/dashboardsupplier.css";
-import { useNavigate } from "react-router-dom";
+import NGOChatWithSupplier from "../components/SupplierChatting.jsx";
+import {jwtDecode} from "jwt-decode";
 // import SupplierChatting from "../components/SupplierChatting.jsx";
 
 const DashboardSupplier = () => {
@@ -11,8 +12,19 @@ const DashboardSupplier = () => {
   const [quantity, setQuantity] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [location, setLocation] = useState("");
-  const navigate = useNavigate();
+  const [showPopup , setShowPopup] = useState(false);
+  const [selectedId , setSelectedId] = useState("");
+  
+
   // const [showChat, setShowChat] = useState(false);
+  const openPopup = (ngoId) => {
+    setSelectedId(ngoId);
+    setShowPopup(true);
+  };
+  const token = localStorage.getItem("token");
+  const decoded = jwtDecode(token);
+  const Supplier_id = decoded.id;
+  console.log(Supplier_id);
 
   useEffect(() => {
     fetch("/api/supplier-profile", {
@@ -114,7 +126,6 @@ const DashboardSupplier = () => {
       </header>
       <div>
     </div>
-    <button onClick={()=>{navigate("/dashboard-supplier/:id/chat")}}>Chat</button>
 
       
       <section className="ngo-section">
@@ -124,13 +135,17 @@ const DashboardSupplier = () => {
           </div>
           <div className="section-card-body">
             <div className="table-responsive">
+            {showPopup && (
+        <NGOChatWithSupplier ngoId={selectedId} Supplier_id = {Supplier_id} close={() => setShowPopup(false)} />
+      )}
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>NGO Name</th>
+                    <th>NGO ID</th>
                     <th>Food Requested</th>
                     <th>Contact</th>
                     <th>Action</th>
+                    <th>Chatting...</th>
                     
                   </tr>
                 </thead>
@@ -138,10 +153,11 @@ const DashboardSupplier = () => {
                   {ngos.length > 0 ? (
                     ngos.map((ngorequest) => (
                       <tr key={ngorequest.id || Math.random()}>
-                        <td>{ngorequest.ngo_name}</td>
+                        <td><span>{ngorequest.ngo_id}</span></td>
                         <td>
                           <span className="quantity-pill">{ngorequest.quantity} kg</span> 
                           <span className="food-name">{ngorequest.food_name}</span>
+                          
                         </td>
                         <td>{ngorequest.requesting_ngoo_phone}</td>
                         <td>
@@ -151,8 +167,9 @@ const DashboardSupplier = () => {
                           >
                             Approve
                           </button>
-                          <td class = "approve-btn">Chat</td>
                         </td>
+                        <td><button onClick={()=>openPopup(ngorequest.ngo_id)}> Chat</button></td>
+                        
                       </tr>
                     ))
                   ) : (

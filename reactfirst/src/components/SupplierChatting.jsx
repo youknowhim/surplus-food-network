@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 
+
 const socket = io("/api", {
     transports: ["websocket", "polling"], // This specifies both transports
     withCredentials: true, // Ensure cookies are sent with requests if needed
   });
+ 
 
-const NGOChatWithSupplier = ({ supplierId, ngoId }) => {
+const NGOChatWithSupplier = ({ Supplier_id, ngoId , close }) => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
-    socket.emit("joinRoom", `${supplierId}_${ngoId}`);
+    socket.emit("joinRoom", `${Supplier_id}_${ngoId}`);
 
     socket.on("receiveMessage", (data) => {
       setChat((prev) => [...prev, data]);
@@ -20,12 +22,12 @@ const NGOChatWithSupplier = ({ supplierId, ngoId }) => {
     return () => {
       socket.off("receiveMessage");
     };
-  }, [supplierId, ngoId]);
+  }, [Supplier_id, ngoId]);
 
   const sendMessage = () => {
     const data = { text: message, sender: ngoId };
     socket.emit("sendMessage", {
-      room: `${supplierId}_${ngoId}`,
+      room: `${Supplier_id}_${ngoId}`,
       message: data,
     });
     setChat((prev) => [...prev, data]);
@@ -36,6 +38,7 @@ const NGOChatWithSupplier = ({ supplierId, ngoId }) => {
     <div>
       <h3>Chat with Supplier</h3>
       <div>
+      <button onClick={close}>Close</button>
         {chat.map((msg, idx) => (
           <p key={idx} style={{ textAlign: msg.sender === ngoId ? "right" : "left" }}>
             {msg.text}

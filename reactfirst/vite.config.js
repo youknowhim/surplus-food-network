@@ -7,7 +7,8 @@ export default defineConfig({
     port: 5173, // Frontend runs on this port
     proxy: {
       "/api": {
-        target: "http://localhost:5000", // Backend runs on this port
+        target: "http://localhost:5000",
+        ws: true, // Backend runs on this port
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ""),
