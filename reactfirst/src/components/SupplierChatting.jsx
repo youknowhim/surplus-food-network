@@ -1,54 +1,100 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
+import "../css/SupplierChatWithNGO.css";
 
+// Initialize socket once
+const socket = io("http://localhost:5000", {
+  transports: ["websocket", "polling"],
+  withCredentials: true,
+});
 
-const socket = io("/api", {
-    transports: ["websocket", "polling"], // This specifies both transports
-    withCredentials: true, // Ensure cookies are sent with requests if needed
-  });
- 
-
-const NGOChatWithSupplier = ({ Supplier_id, ngoId , close }) => {
+const SupplierChatWithNGO = ({ ngoId,Supplier_id, close }) => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
+  const messagesEndRef = useRef(null);
+
+  const roomId = `${Supplier_id}_${ngoId}`;
 
   useEffect(() => {
-    socket.emit("joinRoom", `${Supplier_id}_${ngoId}`);
+    socket.emit("joinRoom", roomId);
+
+    socket.on("loadMessages", (messages) => {
+      setChat(messages);
+    });
 
     socket.on("receiveMessage", (data) => {
       setChat((prev) => [...prev, data]);
     });
 
     return () => {
+      socket.off("loadMessages");
       socket.off("receiveMessage");
     };
-  }, [Supplier_id, ngoId]);
+  }, [roomId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
 
   const sendMessage = () => {
-    const data = { text: message, sender: ngoId };
+    if (!message.trim()) return;
+
+    const newMessage = { text: message, sender: Supplier_id};
+
     socket.emit("sendMessage", {
-      room: `${Supplier_id}_${ngoId}`,
-      message: data,
+      room: roomId,
+      message: newMessage,
     });
-    setChat((prev) => [...prev, data]);
     setMessage("");
   };
 
   return (
-    <div>
-      <h3>Chat with Supplier</h3>
-      <div>
-      <button onClick={close}>Close</button>
-        {chat.map((msg, idx) => (
-          <p key={idx} style={{ textAlign: msg.sender === ngoId ? "right" : "left" }}>
-            {msg.text}
-          </p>
-        ))}
+    <div className="chat-popup">
+      <div className="chat-header">
+        <h3>Chat with NGO</h3>
+        <button className="close-button" onClick={close}>
+          &times;
+        </button>
       </div>
-      <input value={message} onChange={(e) => setMessage(e.target.value)} />
-      <button onClick={sendMessage}>Send</button>
+
+      <div className="chat-messages">
+        
+        {chat.map((msg, index) => (
+        
+          <div
+            key={index}
+            className={`chat-bubble ${
+              msg.sender === Supplier_id? "outgoing" : "incoming"
+            }`}
+          >
+
+            {msg.sender_id}--
+            {msg.text}
+            {msg.textt}
+            -({msg.timestamp})
+            
+            
+          </div>
+          
+        ))}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      <div className="chat-input-area">
+        <input
+          type="text"
+          placeholder="Type your message..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+        />
+        <button onClick={sendMessage}>Send</button>
+      </div>
     </div>
   );
 };
 
-export default NGOChatWithSupplier;
+export default SupplierChatWithNGO;
+
+

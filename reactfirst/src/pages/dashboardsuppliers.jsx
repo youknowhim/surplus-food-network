@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../css/dashboardsupplier.css";
-import NGOChatWithSupplier from "../components/SupplierChatting.jsx";
+import  SupplierChatWithNGO from "../components/SupplierChatting.jsx";
 import {jwtDecode} from "jwt-decode";
 // import SupplierChatting from "../components/SupplierChatting.jsx";
 
@@ -136,7 +136,7 @@ const DashboardSupplier = () => {
           <div className="section-card-body">
             <div className="table-responsive">
             {showPopup && (
-        <NGOChatWithSupplier ngoId={selectedId} Supplier_id = {Supplier_id} close={() => setShowPopup(false)} />
+        < SupplierChatWithNGO ngoId={selectedId} Supplier_id = {Supplier_id} close={() => setShowPopup(false)} />
       )}
               <table className="data-table">
                 <thead>

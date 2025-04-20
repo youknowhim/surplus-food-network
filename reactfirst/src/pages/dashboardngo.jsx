@@ -1,14 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/dashboard.css"; // Updated CSS import
+import { jwtDecode } from "jwt-decode";
+import NGOChatWithSupplier from "../components/NgoChatting.jsx";
+
 
 const Dashboardngo = () => {
   const [foodList, setFoodList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [ Supplier_Id , setSUPPLIERId] = useState("");
+  const [showPopup , setShowPopup] = useState(false);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const decoded = jwtDecode(token);
+  const ngo_id = decoded.id;
+
+  const openPopup =  (supplierId)=>{
+    setSUPPLIERId(supplierId);
+    setShowPopup(true);
+
+
+
+  } 
+
+  
 
   useEffect(() => {
     if (!token) {
@@ -108,6 +126,9 @@ const Dashboardngo = () => {
           
         
       </header>
+      {showPopup && (
+        < NGOChatWithSupplier ngoId={ngo_id} supplierId = {Supplier_Id} close={() => setShowPopup(false)} />
+      )}
       
       {filteredFoodList.length === 0 ? (
         <div className="no-food-container">
@@ -147,6 +168,8 @@ const Dashboardngo = () => {
                   </div>
                 </div>
                 <div className="food-card-actions">
+
+                  <button onClick={()=>{openPopup(food.supplier_id)}}>Chat</button>
                   <button 
                     className="request-btn" 
                     onClick={() => requestFood(food.food_name, food.supplier_id)}
